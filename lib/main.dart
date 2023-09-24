@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'nextpage.dart';
+
 
 void main() {
   runApp(const App());
@@ -27,21 +29,54 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _second = 0;
+  Timer? _timer;
+  bool _isRunning = false;
 
   @override
   void initState() {
     super.initState();
+    toggleTimer();
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   setState(() {
+    //     _second++;
+    //   });
+    // });
+  }
 
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _second++;
-      });
+
+  void stopTimer() {
+    _timer?.cancel();
+  }
+
+  void toggleTimer() {
+    if (_isRunning) {
+      _timer?.cancel();
+    } else {
+      _timer = Timer.periodic(
+        const Duration(seconds: 1),
+            (timer) {
+          setState(() {
+            _second++;
+          });
+          if (_second == 10) {
+            Navigator.push (
+              context,
+              MaterialPageRoute(builder: (context) => NextPage()),
+              //MaterialPageRoute(builder: (context) => NextPage()),
+            );
+          }
+        },
+      );
+    }
+    setState(() {
+      _isRunning = !_isRunning;
     });
   }
 
@@ -52,11 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Text(
+        child: Column(
+        children:[ Text(
             '$_second',
-        style: TextStyle(fontSize: 60),
+        style: const TextStyle(fontSize: 100),
         ),
+        ElevatedButton(
+          onPressed: () {
+            toggleTimer();
+          },
+          child: Text(
+            _isRunning? 'ストップ' : 'スタート',
+          ),
+        ),
+      ],
+      ),
       ),
     );
   }
+
+
 }
