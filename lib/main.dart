@@ -65,11 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
       _timer?.cancel();
     } else {
       _timer = Timer.periodic(
-        const Duration(milliseconds: 100),
+        const Duration(milliseconds: 10),
             (timer) {
           setState(() {
             //_second++;
-            _second += 100;
+            _second += 10;
           });
           if (_second >= 10000) {
             resetTimer();
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     int minutes = (_second ~/ 60000);
     int seconds = (_second % 60000) ~/ 1000;
-    int hundredth = (_second % 1000) ~/ 100;
+    int hundredth = (_second % 1000);
 
     return Scaffold(
       appBar: AppBar(
