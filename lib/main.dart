@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
         children:[ Text(
           '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}.${hundredth.toString().padLeft(1, '0')}',
           style: const TextStyle(fontSize: 40),
