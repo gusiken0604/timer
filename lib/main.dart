@@ -65,12 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
       _timer?.cancel();
     } else {
       _timer = Timer.periodic(
-        const Duration(seconds: 1),
+        const Duration(milliseconds: 100),
             (timer) {
           setState(() {
-            _second++;
+            //_second++;
+            _second += 100;
           });
-          if (_second == 10) {
+          if (_second >= 10000) {
             resetTimer();
             Navigator.push (
               context,
@@ -88,6 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    int minutes = (_second ~/ 60000);
+    int seconds = (_second % 60000) ~/ 1000;
+    int hundredth = (_second % 1000) ~/ 100;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -95,8 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
         children:[ Text(
-            '$_second',
-        style: const TextStyle(fontSize: 100),
+          '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}.${hundredth.toString().padLeft(1, '0')}',
+          style: const TextStyle(fontSize: 40),
+        //     '$_second',
+        // style: const TextStyle(fontSize: 100),
         ),
         ElevatedButton(
           onPressed: () {
