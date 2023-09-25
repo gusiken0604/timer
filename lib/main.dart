@@ -43,16 +43,21 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     toggleTimer();
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   setState(() {
-    //     _second++;
-    //   });
-    // });
+
   }
 
 
   void stopTimer() {
     _timer?.cancel();
+  }
+
+  void resetTimer() {
+    _timer?.cancel();
+
+    setState(() {
+      _second = 0;
+      _isRunning = false;
+    });
   }
 
   void toggleTimer() {
@@ -66,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _second++;
           });
           if (_second == 10) {
+            resetTimer();
             Navigator.push (
               context,
               MaterialPageRoute(builder: (context) => NextPage()),
@@ -100,7 +106,20 @@ class _MyHomePageState extends State<MyHomePage> {
             _isRunning? 'ストップ' : 'スタート',
           ),
         ),
+          ElevatedButton(
+            onPressed: () {
+              resetTimer();
+            },
+            child: Text(
+              'リセット',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
       ],
+
       ),
       ),
     );
